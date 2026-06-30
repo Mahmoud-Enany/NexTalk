@@ -1,0 +1,136 @@
+﻿@model SignalRTask.ViewModels.Chat.PrivateChatVM
+
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<div class="chat-container">
+
+    <div class="chat-header">
+
+        <div class="chat-user">
+
+            <i class="bi bi-person-circle"></i>
+
+            <div>
+
+                <h5>@Model.Friend.Email</h5>
+
+                <small>Online</small>
+
+            </div>
+
+        </div>
+
+        <a asp-controller="Friends"
+           asp-action="Index"
+           class="btn btn-light btn-sm">
+
+            Back
+
+        </a>
+
+    </div>
+
+    <div class="chat-body">
+
+        @if (Model.Messages.Any())
+        {
+            @foreach (var message in Model.Messages)
+            {
+                bool mine = message.SenderId == (string)ViewBag.CurrentUserId;
+
+                <div class="message-row @(mine ? "my-message" : "friend-message")">
+
+                    <div class="message-box">
+
+                        @message.Content
+
+                        <span class="message-time">
+
+                            @message.SentAt.ToString("hh:mm tt")
+
+                        </span>
+
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-center text-muted mt-5">
+
+                No messages yet
+
+            </div>
+        }
+
+    </div>
+
+    <div class="chat-footer">
+
+        <input type="hidden" id="friendId" value="@Model.FriendId" />
+
+        <div class="input-group">
+
+            <span class="input-group-text">
+                <i class="bi bi-emoji-smile"></i>
+            </span>
+
+            <input id="txtMessage"
+                   class="form-control"
+                   placeholder="Type your message..." />
+
+            <button class="btn btn-primary"
+                    onclick="sendMessage()">
+
+                <i class="bi bi-send-fill"></i>
+
+                Send
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <script>
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.start();
+        connection.on("ReceivePrivateChatMessage",
+        function(senderId,senderName,message,sentAt){
+
+            alert(message);
+
+        });
+
+        async function sendMessage() {
+
+            let receiverId = document.getElementById("friendId").value;
+
+            let message = document.getElementById("txtMessage").value;
+
+            if(message=="")
+                return;
+
+            await connection.invoke(
+                "SendPrivateChatMessage",
+                receiverId,
+                message);
+
+            document.getElementById("txtMessage").value="";
+
+        }
+
+    </script>
+
+}

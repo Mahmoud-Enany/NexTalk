@@ -1,0 +1,184 @@
+﻿@model SignalRTask.ViewModels.Friends.FriendsIndexVM
+
+@{
+    ViewData["Title"] = "Friends";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-people-fill"></i>
+                Friends
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <h5>
+                <i class="bi bi-search"></i>
+                Search Users
+            </h5>
+
+            <form asp-action="Index" method="get">
+                <div class="input-group mb-4">
+                    <input asp-for="Search"
+                           class="form-control"
+                           placeholder="Search by email..." />
+                    <button class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                        Search
+                    </button>
+                </div>
+            </form>
+
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    Search Results
+                </div>
+
+                <div class="card-body">
+
+                    @if (Model.SearchResult.Any())
+                    {
+                        @foreach (var user in Model.SearchResult)
+                        {
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+
+                                <span>@user.Email</span>
+
+                                <form asp-action="SendRequest" method="post">
+
+                                    <input type="hidden"
+                                           name="receiverId"
+                                           value="@user.Id" />
+
+                                    <button class="btn btn-success btn-sm">
+                                        Add Friend
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted">
+                            Search for users...
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <!-- Friend Requests -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    Friend Requests
+                </div>
+
+                <div class="card-body">
+
+                    @if (Model.FriendRequests.Any())
+                    {
+                        @foreach (var request in Model.FriendRequests)
+                        {
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+
+                                <span>@request.Sender.Email</span>
+
+                                <div>
+
+                                    <form asp-action="AcceptRequest" method="post" class="d-inline">
+
+                                        <input type="hidden"
+                                               name="requestId"
+                                               value="@request.Id" />
+
+                                        <button class="btn btn-success btn-sm">
+                                            Accept
+                                        </button>
+
+                                    </form>
+
+                                    <button class="btn btn-danger btn-sm">
+                                        Reject
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted">
+                            No pending friend requests.
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+                    My Friends
+                </div>
+
+                <div class="card-body">
+
+                    @if (Model.Friends.Any())
+                    {
+                        @foreach (var friend in Model.Friends)
+                        {
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-3">
+
+                                <div>
+
+                                    <i class="bi bi-person-circle fs-4"></i>
+
+                                    <span class="ms-2 fw-semibold">
+
+                                        @friend.FriendUser.Email
+
+                                    </span>
+
+                                </div>
+
+                                <a asp-controller="Chat"
+                                   asp-action="Private"
+                                   asp-route-id="@friend.FriendId"
+                                   class="btn btn-primary btn-sm">
+
+                                    Open Chat
+
+                                </a>
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted">
+
+                            You don't have any friends yet.
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../SignalRDesktopClient/SignalRDesktopClient.csproj" Id="b5c9a628-9aea-469f-bd12-f55e6f7be3b9" />
+  <Project Path="SignalRTask.csproj" />
+</Solution>
