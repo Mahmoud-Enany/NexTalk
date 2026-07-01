@@ -87,6 +87,11 @@
     border-top: 1px solid #ddd;
 }
 
-    .chat-footer .input-group-text {
+.chat-footer .input-group-text {
         background: white;
-    }
+}
+
+.delivery.seen {
+    color: #4fc3f7;
+    font-weight: bold;
+}

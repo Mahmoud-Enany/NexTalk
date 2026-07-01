@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SignalRTask.Data;
 using SignalRTask.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using SignalRTask.Infrastructure;
 
 namespace SignalRTask
 {
@@ -21,6 +23,7 @@ namespace SignalRTask
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddSignalR();
+            builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
             var app = builder.Build();
 

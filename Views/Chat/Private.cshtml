@@ -1,7 +1,7 @@
 ﻿@model SignalRTask.ViewModels.Chat.PrivateChatVM
 
 @{
-    ViewData["Title"] = "Chat";
+    ViewData["Title"] = "Private Chat";
 }
 
 <div class="chat-container">
@@ -25,43 +25,41 @@
         <a asp-controller="Friends"
            asp-action="Index"
            class="btn btn-light btn-sm">
-
             Back
-
         </a>
 
     </div>
 
-    <div class="chat-body">
+    <div class="chat-body" id="chatBody">
 
-        @if (Model.Messages.Any())
+        @foreach (var message in Model.Messages)
         {
-            @foreach (var message in Model.Messages)
-            {
-                bool mine = message.SenderId == (string)ViewBag.CurrentUserId;
+            bool mine = message.SenderId == (string)ViewBag.CurrentUserId;
 
-                <div class="message-row @(mine ? "my-message" : "friend-message")">
+            <div class="message-row @(mine ? "my-message" : "friend-message")">
 
-                    <div class="message-box">
+                <div class="message-box" id="msg-@message.Id">
 
-                        @message.Content
+                    @message.Content
 
-                        <span class="message-time">
+                    <br />
 
-                            @message.SentAt.ToString("hh:mm tt")
+                    <small>
 
-                        </span>
+                        @message.SentAt.ToString("hh:mm tt")
 
-                    </div>
+                        @if (mine)
+                        {
+                            <span class="delivery @(message.IsSeen ? "seen" : "")">
+
+                                @(message.IsDelivered ? "✓✓" : "✓")
+
+                            </span>
+                        }
+
+                    </small>
 
                 </div>
-            }
-        }
-        else
-        {
-            <div class="text-center text-muted mt-5">
-
-                No messages yet
 
             </div>
         }
@@ -75,14 +73,17 @@
         <div class="input-group">
 
             <span class="input-group-text">
+
                 <i class="bi bi-emoji-smile"></i>
+
             </span>
 
             <input id="txtMessage"
                    class="form-control"
                    placeholder="Type your message..." />
 
-            <button class="btn btn-primary"
+            <button type="button"
+                    class="btn btn-primary"
                     onclick="sendMessage()">
 
                 <i class="bi bi-send-fill"></i>
@@ -97,29 +98,103 @@
 
 </div>
 
-@section Scripts{
-
+@section Scripts
+{
     <script>
 
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
 
-        connection.start();
-        connection.on("ReceivePrivateChatMessage",
-        function(senderId,senderName,message,sentAt){
+                connection.on("ReceivePrivateChatMessage",
+        function(messageId,senderId,senderName,message,sentAt){
 
-            alert(message);
+            let myId='@ViewBag.CurrentUserId';
+
+            let mine=senderId===myId;
+
+            let checks=mine?"<span class='delivery'>✓</span>":"";
+
+            let html=`
+
+                <div class="message-row ${mine?"my-message":"friend-message"}">
+
+                    <div class="message-box" id="msg-${messageId}">
+
+                        ${message}
+
+                        <br>
+
+                        <small>
+
+                            ${new Date(sentAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+
+                            ${checks}
+
+                        </small>
+
+                    </div>
+
+                </div>
+            `;
+
+            chatBody.insertAdjacentHTML("beforeend",html);
+
+            chatBody.scrollTop=chatBody.scrollHeight;
+
+            if (!mine) {
+
+                connection.invoke("MarkMessageDelivered", messageId);
+
+            }
 
         });
 
-        async function sendMessage() {
+        connection.on("MessageDelivered",function(messageId){
 
-            let receiverId = document.getElementById("friendId").value;
+            let msg=document.querySelector(`#msg-${messageId} .delivery`);
 
-            let message = document.getElementById("txtMessage").value;
+            if(msg){
 
-            if(message=="")
+                msg.innerHTML="✓✓";
+
+            }
+
+        });
+
+                connection.on("MessageSeen", function (messageId) {
+
+            let msg = document.querySelector(`#msg-${messageId} .delivery`);
+
+            if (msg) {
+
+                msg.innerHTML = "✓✓";
+
+                msg.classList.add("seen");
+
+            }
+
+        });
+
+                connection.start().then(() => {
+
+            document.querySelectorAll(".friend-message .message-box").forEach(function (item) {
+
+                let id = item.id.replace("msg-", "");
+
+                connection.invoke("MarkMessageSeen", parseInt(id));
+
+            });
+
+        });
+
+        async function sendMessage(){
+
+            let receiverId=document.getElementById("friendId").value;
+
+            let message=document.getElementById("txtMessage").value.trim();
+
+            if(message==="")
                 return;
 
             await connection.invoke(
@@ -127,10 +202,9 @@
                 receiverId,
                 message);
 
-            document.getElementById("txtMessage").value="";
+            txtMessage.value="";
 
         }
 
     </script>
-
 }

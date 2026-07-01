@@ -87,7 +87,10 @@ namespace SignalRTask.Hubs
             {
                 SenderId = senderId,
                 ReceiverId = receiverId,
-                Content = message
+                Content = message,
+                IsDelivered = false,
+                IsSeen = false,
+                IsRead = false
             };
 
             context.PrivateMessages.Add(privateMessage);
@@ -97,20 +100,66 @@ namespace SignalRTask.Hubs
             await Clients.User(receiverId)
                 .SendAsync(
                     "ReceivePrivateChatMessage",
+                    privateMessage.Id,
                     senderId,
                     senderName,
                     message,
                     privateMessage.SentAt);
 
+            privateMessage.IsDelivered = true;
+
+            await context.SaveChangesAsync();
+
+            await Clients.Caller
+                .SendAsync(
+                    "MessageDelivered",
+                    privateMessage.Id);
+
             await Clients.Caller
                 .SendAsync(
                     "ReceivePrivateChatMessage",
+                    privateMessage.Id,
                     senderId,
                     senderName,
                     message,
                     privateMessage.SentAt);
         }
+        public async Task MarkMessageDelivered(int messageId)
+        {
+            var message = await context.PrivateMessages.FindAsync(messageId);
 
+            if (message == null)
+                return;
+
+            if (!message.IsDelivered)
+            {
+                message.IsDelivered = true;
+
+                await context.SaveChangesAsync();
+            }
+
+            await Clients.User(message.SenderId)
+                .SendAsync("MessageDelivered", messageId);
+        }
+        public async Task MarkMessageSeen(int messageId)
+        {
+            var message = await context.PrivateMessages.FindAsync(messageId);
+
+            if (message == null)
+                return;
+
+            if (!message.IsSeen)
+            {
+                message.IsSeen = true;
+
+                message.IsRead = true;
+
+                await context.SaveChangesAsync();
+            }
+
+            await Clients.User(message.SenderId)
+                .SendAsync("MessageSeen", messageId);
+        }
 
     }
 
