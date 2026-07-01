@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using SignalRTask.Data;
 using SignalRTask.Models;
+using SignalRTask.Models.Connection;
+using Microsoft.EntityFrameworkCore;
 
 namespace SignalRTask.Hubs
 {
@@ -167,6 +169,51 @@ namespace SignalRTask.Hubs
 
             await Clients.User(receiverId)
                 .SendAsync("UserTyping", senderName);
+        }
+        public override async Task OnConnectedAsync()
+        {
+            if (Context.UserIdentifier != null)
+            {
+                context.UserConnections.Add(new UserConnection
+                {
+                    UserId = Context.UserIdentifier,
+                    ConnectionId = Context.ConnectionId
+                });
+
+                await context.SaveChangesAsync();
+
+                await Clients.All.SendAsync("UserOnline", Context.UserIdentifier);
+            }
+
+            await base.OnConnectedAsync();
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            var connection = await context.UserConnections
+                .FirstOrDefaultAsync(x => x.ConnectionId == Context.ConnectionId);
+
+            if (connection != null)
+            {
+                context.UserConnections.Remove(connection);
+
+                await context.SaveChangesAsync();
+
+                bool stillOnline = await context.UserConnections
+                    .AnyAsync(x => x.UserId == connection.UserId);
+
+                if (!stillOnline)
+                {
+                    await Clients.All.SendAsync("UserOffline", connection.UserId);
+                }
+            }
+
+            await base.OnDisconnectedAsync(exception);
+        }
+        public async Task<bool> IsUserOnline(string userId)
+        {
+            return await context.UserConnections
+                .AnyAsync(x => x.UserId == userId);
         }
 
     }

@@ -16,7 +16,9 @@
 
                 <h5>@Model.Friend.Email</h5>
 
-                <small>Online</small>
+                <small id="userStatus">
+                    Offline
+                </small>
 
             </div>
 
@@ -183,12 +185,34 @@
             }, 1500);
 
         });
-        connection.start().then(() => {
+        connection.on("UserOnline", function (userId) 
+        {
+            let friendId = document.getElementById("friendId").value;
+            if (friendId === userId) 
+            {
+                document.getElementById("userStatus").innerHTML = "🟢 Online";
+            }
+        });
+
+        connection.on("UserOffline", function (userId) {
+            let friendId = document.getElementById("friendId").value;
+            if (friendId === userId) {
+                document.getElementById("userStatus").innerHTML = "⚫ Offline";
+            }
+        });
+
+        connection.start().then(async () => 
+        { 
             document.querySelectorAll(".friend-message .message-box").forEach(function (item) {
                 let id = item.id.replace("msg-", "");
                 connection.invoke("MarkMessageSeen", parseInt(id));
             });
+
+            let friendId = document.getElementById("friendId").value;
+            let online = await connection.invoke("IsUserOnline", friendId);
+            document.getElementById("userStatus").innerHTML = online ? "🟢 Online" : "⚫ Offline";
         });
+
         document.getElementById("txtMessage").addEventListener("input", function () {
             let receiverId = document.getElementById("friendId").value;
             connection.invoke("Typing", receiverId);
