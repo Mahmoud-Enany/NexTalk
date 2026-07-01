@@ -161,6 +161,14 @@ namespace SignalRTask.Hubs
                 .SendAsync("MessageSeen", messageId);
         }
 
+        public async Task Typing(string receiverId)
+        {
+            string senderName = Context.User?.Identity?.Name ?? "Unknown";
+
+            await Clients.User(receiverId)
+                .SendAsync("UserTyping", senderName);
+        }
+
     }
 
 }

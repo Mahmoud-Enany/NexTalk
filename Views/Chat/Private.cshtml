@@ -65,7 +65,10 @@
         }
 
     </div>
-
+    <div id="typingIndicator"
+         class="text-muted ps-3 pb-2"
+         style="display:none;font-style:italic;">
+    </div>
     <div class="chat-footer">
 
         <input type="hidden" id="friendId" value="@Model.FriendId" />
@@ -101,7 +104,7 @@
 @section Scripts
 {
     <script>
-
+        let typingTimeout;
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
@@ -161,42 +164,41 @@
             }
 
         });
-
-                connection.on("MessageSeen", function (messageId) {
-
+        connection.on("MessageSeen", function (messageId) {
             let msg = document.querySelector(`#msg-${messageId} .delivery`);
-
-            if (msg) {
-
+            if (msg)
+            {
                 msg.innerHTML = "✓✓";
-
                 msg.classList.add("seen");
-
             }
+        });
+        connection.on("UserTyping", function (senderName) {
+            let div = document.getElementById("typingIndicator");
+            div.innerHTML = senderName + " is typing...";
+            div.style.display = "block";
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(function () 
+            {
+                div.style.display = "none";
+            }, 1500);
 
         });
-
-                connection.start().then(() => {
-
+        connection.start().then(() => {
             document.querySelectorAll(".friend-message .message-box").forEach(function (item) {
-
                 let id = item.id.replace("msg-", "");
-
                 connection.invoke("MarkMessageSeen", parseInt(id));
-
             });
-
+        });
+        document.getElementById("txtMessage").addEventListener("input", function () {
+            let receiverId = document.getElementById("friendId").value;
+            connection.invoke("Typing", receiverId);
         });
 
         async function sendMessage(){
-
             let receiverId=document.getElementById("friendId").value;
-
             let message=document.getElementById("txtMessage").value.trim();
-
             if(message==="")
                 return;
-
             await connection.invoke(
                 "SendPrivateChatMessage",
                 receiverId,
