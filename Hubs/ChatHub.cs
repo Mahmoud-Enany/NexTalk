@@ -9,6 +9,7 @@ namespace SignalRTask.Hubs
 {
     public class ChatHub: Hub
     {
+        private static readonly Dictionary<string, string> ActiveChats = new();
         private readonly ApplicationDbContext context;
 
         public ChatHub(ApplicationDbContext context)
@@ -83,7 +84,6 @@ namespace SignalRTask.Hubs
         public async Task SendPrivateChatMessage(string receiverId, string message)
         {
             string senderId = Context.UserIdentifier!;
-
             string senderName = Context.User?.Identity?.Name ?? "Unknown";
 
             PrivateMessage privateMessage = new()
@@ -99,33 +99,41 @@ namespace SignalRTask.Hubs
             context.PrivateMessages.Add(privateMessage);
 
             await context.SaveChangesAsync();
-            context.Notifications.Add(new Notification
+
+            bool receiverViewingThisChat = false;
+
+            lock (ActiveChats)
             {
-                UserId = receiverId,
-                Title = "New Message",
-                Content = $"{senderName}: {message}",
-                Type = NotificationType.PrivateMessage,
-                IsRead = false,
-                Url = $"/Chat/Private/{senderId}"
-            });
+                receiverViewingThisChat =
+                    ActiveChats.TryGetValue(receiverId, out var openedChat)
+                    && openedChat == senderId;
+            }
 
-            await context.SaveChangesAsync();
+            if (!receiverViewingThisChat)
+            {
+                Notification notification = new()
+                {
+                    UserId = receiverId,
+                    Title = "New Message",
+                    Content = $"{senderName}: {message}",
+                    Type = NotificationType.PrivateMessage,
+                    Url = $"/Chat/Private/{senderId}"
+                };
 
-            await Clients.User(receiverId).SendAsync("ReceivePrivateChatMessage",privateMessage.Id,senderId,senderName,message,privateMessage.SentAt);
+                context.Notifications.Add(notification);
 
-            Notification notification = await context.Notifications.OrderByDescending(n => n.Id).FirstAsync(n => n.UserId == receiverId);
-            await Clients.User(receiverId).SendAsync("ReceiveNotification",notification.Id,notification.Title, notification.Content,notification.Url);
+                await context.SaveChangesAsync();
 
-            privateMessage.IsDelivered = true;
+                await Clients.User(receiverId)
+                    .SendAsync(
+                        "ReceiveNotification",
+                        notification.Id,
+                        notification.Title,
+                        notification.Content,
+                        notification.Url);
+            }
 
-            await context.SaveChangesAsync();
-
-            await Clients.Caller
-                .SendAsync(
-                    "MessageDelivered",
-                    privateMessage.Id);
-
-            await Clients.Caller
+            await Clients.User(receiverId)
                 .SendAsync(
                     "ReceivePrivateChatMessage",
                     privateMessage.Id,
@@ -133,6 +141,22 @@ namespace SignalRTask.Hubs
                     senderName,
                     message,
                     privateMessage.SentAt);
+
+            privateMessage.IsDelivered = true;
+
+            await context.SaveChangesAsync();
+
+            await Clients.Caller.SendAsync(
+                "MessageDelivered",
+                privateMessage.Id);
+
+            await Clients.Caller.SendAsync(
+                "ReceivePrivateChatMessage",
+                privateMessage.Id,
+                senderId,
+                senderName,
+                message,
+                privateMessage.SentAt);
         }
         public async Task MarkMessageDelivered(int messageId)
         {
@@ -182,6 +206,11 @@ namespace SignalRTask.Hubs
         {
             if (Context.UserIdentifier != null)
             {
+                var oldConnections = context.UserConnections
+                    .Where(x => x.UserId == Context.UserIdentifier);
+
+                context.UserConnections.RemoveRange(oldConnections);
+
                 context.UserConnections.Add(new UserConnection
                 {
                     UserId = Context.UserIdentifier,
@@ -223,6 +252,31 @@ namespace SignalRTask.Hubs
             return await context.UserConnections
                 .AnyAsync(x => x.UserId == userId);
         }
+        public Task SetActiveChat(string friendId)
+        {
+            string userId = Context.UserIdentifier!;
+
+            lock (ActiveChats)
+            {
+                ActiveChats[userId] = friendId;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task ClearActiveChat()
+        {
+            string userId = Context.UserIdentifier!;
+
+            lock (ActiveChats)
+            {
+                ActiveChats.Remove(userId);
+            }
+
+            return Task.CompletedTask;
+        }
+
+
 
     }
 

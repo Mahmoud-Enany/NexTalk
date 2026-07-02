@@ -135,10 +135,12 @@
             chatBody.insertAdjacentHTML("beforeend",html);
             chatBody.scrollTop=chatBody.scrollHeight;
 
-            if (!mine) 
-            {
-                connection.invoke("MarkMessageDelivered", messageId);
-            }
+                    if (!mine)
+        {
+            connection.invoke("MarkMessageDelivered", messageId);
+
+            connection.invoke("MarkMessageSeen", messageId);
+        }
         });
 
         connection.on("MessageDelivered",function(messageId)
@@ -187,16 +189,24 @@
             }
         });
 
-        connection.start().then(async () => 
-        { 
+                connection.start().then(async () => {
+
+            const friendId = document.getElementById("friendId").value;
+
+            await connection.invoke("SetActiveChat", friendId);
+
             document.querySelectorAll(".friend-message .message-box").forEach(function (item) {
+
                 let id = item.id.replace("msg-", "");
+
                 connection.invoke("MarkMessageSeen", parseInt(id));
+
             });
 
-            let friendId = document.getElementById("friendId").value;
             let online = await connection.invoke("IsUserOnline", friendId);
-            document.getElementById("userStatus").innerHTML = online ? "🟢 Online" : "⚫ Offline";
+
+            document.getElementById("userStatus").innerHTML =
+                online ? "🟢 Online" : "⚫ Offline";
         });
 
         document.getElementById("txtMessage").addEventListener("input", function () {
@@ -217,6 +227,10 @@
             txtMessage.value="";
 
         }
+                window.addEventListener("beforeunload", function () {
 
+            connection.invoke("ClearActiveChat");
+
+        });
     </script>
 }
