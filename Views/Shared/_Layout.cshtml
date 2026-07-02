@@ -222,17 +222,22 @@
                 return;
             }
 
-            notifications.forEach(n => {
+                    notifications.forEach(n => {
 
-                list.innerHTML += `
-                    <li>
-                        <a class="dropdown-item" href="${n.url}">
-                            <strong>${n.title}</strong><br/>
-                            <small>${n.content}</small>
-                        </a>
-                    </li>`;
+            list.innerHTML += `
+                <li>
+                    <a class="dropdown-item"
+                       href="${n.url}"
+                       onclick="markAsRead(${n.id})">
 
-            });
+                        <strong>${n.title}</strong><br/>
+
+                        <small>${n.content}</small>
+
+                    </a>
+                </li>`;
+
+        });
 
         }
                 async function loadUnreadCount() {
@@ -255,6 +260,17 @@
                 badge.style.display = "none";
 
             }
+
+        }
+
+                async function markAsRead(id) {
+
+            await fetch("/Chat/MarkNotificationAsRead?id=" + id,
+            {
+                method: "POST"
+            });
+
+            loadUnreadCount();
 
         }
 

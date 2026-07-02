@@ -76,6 +76,25 @@ namespace SignalRTask.Controllers
 
             return Json(count);
         }
+        [HttpPost]
+        public async Task<IActionResult> MarkNotificationAsRead(int id)
+        {
+            string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            var notification = await context.Notifications
+                .FirstOrDefaultAsync(n =>
+                    n.Id == id &&
+                    n.UserId == currentUserId);
+
+            if (notification == null)
+                return NotFound();
+
+            notification.IsRead = true;
+
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
 
     }
 }
