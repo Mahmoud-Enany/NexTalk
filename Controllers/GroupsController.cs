@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SignalRTask.Data;
+using SignalRTask.Models;
+using SignalRTask.ViewModels.Groups;
 using System.Security.Claims;
 
 namespace SignalRTask.Controllers
@@ -27,6 +29,33 @@ namespace SignalRTask.Controllers
                 .ToListAsync();
 
             return View(groups);
+        }
+
+        public async Task<IActionResult> Chat(int id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            bool joined = await context.RoomMembers.AnyAsync(x =>
+                x.RoomId == id &&
+                x.UserId == userId);
+
+            if (!joined)
+                return RedirectToAction(nameof(Index));
+
+            var room = await context.Rooms
+                .Include(r => r.Messages)
+                .ThenInclude(m => m.Sender)
+                .FirstAsync(r => r.Id == id);
+
+            GroupChatVM vm = new()
+            {
+                Room = room,
+                Messages = room.Messages
+                    .OrderBy(x => x.SentAt)
+                    .ToList()
+            };
+
+            return View(vm);
         }
     }
 }
