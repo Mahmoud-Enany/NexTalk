@@ -287,7 +287,7 @@ namespace SignalRTask.Hubs
 
             await context.SaveChangesAsync();
 
-            await Clients.User(message.SenderId)
+            await Clients.Users(message.SenderId, message.ReceiverId)
                 .SendAsync("MessageDeleted", messageId);
         }
 

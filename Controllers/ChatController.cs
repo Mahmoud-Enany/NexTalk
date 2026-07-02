@@ -34,12 +34,12 @@ namespace SignalRTask.Controllers
                 return NotFound();
 
             var messages = await context.PrivateMessages
-                .Where(m =>
-                    (m.SenderId == currentUserId && m.ReceiverId == id)
-                    ||
-                    (m.SenderId == id && m.ReceiverId == currentUserId))
-                .OrderBy(m => m.SentAt)
-                .ToListAsync();
+    .Where(m =>
+        (m.SenderId == currentUserId && m.ReceiverId == id)
+        ||
+        (m.SenderId == id && m.ReceiverId == currentUserId))
+    .OrderBy(m => m.SentAt)
+    .ToListAsync();
 
             PrivateChatVM vm = new()
             {

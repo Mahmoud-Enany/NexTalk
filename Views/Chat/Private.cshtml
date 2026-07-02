@@ -42,7 +42,18 @@
 
                 <div class="message-box position-relative" id="msg-@message.Id">
 
-                    @message.Content
+                    @if (message.IsDeleted)
+                    {
+                        <i class="bi bi-trash text-danger"></i>
+
+                        <em class="text-muted">
+                            This message was deleted
+                        </em>
+                    }
+                    else
+                    {
+                        @message.Content
+                    }
                     @if (message.SenderId == (string)ViewBag.CurrentUserId)
                     {
                         <div class="dropdown position-absolute top-0 end-0">
@@ -147,7 +158,7 @@
                     let checks=mine?"<span class='delivery'>✓</span>":"";
                     let html=`
                     <div class="message-row ${mine?"my-message":"friend-message"}">
-                    <div class="message-box" id="msg-${messageId}">
+                    <div class="message-box position-relative" id="msg-${messageId}">
                     ${message}
                     <br>
                     <small>
@@ -159,6 +170,38 @@
             `;
 
             chatBody.insertAdjacentHTML("beforeend",html);
+                    if (mine)
+        {
+            let box = document.getElementById("msg-" + messageId);
+
+            box.insertAdjacentHTML("afterbegin", `
+                <div class="dropdown position-absolute top-0 end-0">
+
+                    <button class="btn btn-sm text-white border-0"
+                            data-bs-toggle="dropdown">
+
+                        ⋮
+
+                    </button>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+
+                            <button class="dropdown-item text-danger"
+                                    onclick="deleteMessage(${messageId})">
+
+                                Delete
+
+                            </button>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+            `);
+        }
             chatBody.scrollTop=chatBody.scrollHeight;
 
                     if (!mine)
@@ -215,12 +258,18 @@
             }
         });
 
-                connection.on("MessageDeleted", function(messageId)
-        {
+                 connection.on("MessageDeleted", function (messageId) {
+
             let msg = document.getElementById("msg-" + messageId);
 
-            if(msg)
-                msg.closest(".message-row").remove();
+            if (!msg)
+                return;
+
+            msg.innerHTML = `
+                <i class="bi bi-trash text-danger"></i>
+                <em class="text-muted">This message was deleted</em>
+            `;
+
         });
 
                 connection.start().then(async () => {
