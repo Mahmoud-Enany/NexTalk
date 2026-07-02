@@ -194,6 +194,41 @@
         });
 
         notificationConnection.start();
+                loadNotifications();
+
+        async function loadNotifications() {
+
+            let response = await fetch("/Chat/GetNotifications");
+
+            let notifications = await response.json();
+
+            let list = document.getElementById("notificationList");
+
+            list.innerHTML = "";
+
+            if (notifications.length === 0) {
+
+                list.innerHTML = `
+                    <li class="dropdown-item text-muted">
+                        No notifications
+                    </li>`;
+
+                return;
+            }
+
+            notifications.forEach(n => {
+
+                list.innerHTML += `
+                    <li>
+                        <a class="dropdown-item" href="${n.url}">
+                            <strong>${n.title}</strong><br/>
+                            <small>${n.content}</small>
+                        </a>
+                    </li>`;
+
+            });
+
+        }
 
     </script>
 

@@ -50,6 +50,19 @@ namespace SignalRTask.Controllers
 
             return View(vm);
         }
-        
+        [HttpGet]
+        public async Task<IActionResult> GetNotifications()
+        {
+            string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            var notifications = await context.Notifications
+                .Where(n => n.UserId == currentUserId)
+                .OrderByDescending(n => n.CreatedAt)
+                .Take(10)
+                .ToListAsync();
+
+            return Json(notifications);
+        }
+
     }
 }
