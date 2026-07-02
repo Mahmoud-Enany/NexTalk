@@ -9,9 +9,15 @@
     <script type="importmap"></script>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/private-chat.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SignalRTask.styles.css" asp-append-version="true" />
+
 </head>
 
 <body>
@@ -25,28 +31,32 @@
                 <a class="navbar-brand"
                    asp-controller="Home"
                    asp-action="Index">
+
                     NexTalk
+
                 </a>
 
                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target=".navbar-collapse">
+                        data-bs-target="#navbarNav">
 
                     <span class="navbar-toggler-icon"></span>
 
                 </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="collapse navbar-collapse" id="navbarNav">
 
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav me-auto">
 
                         <li class="nav-item">
 
-                            <a class="nav-link text-dark"
+                            <a class="nav-link"
                                asp-controller="Home"
                                asp-action="Index">
+
                                 Home
+
                             </a>
 
                         </li>
@@ -55,7 +65,7 @@
                         {
                             <li class="nav-item">
 
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
                                    asp-controller="Friends"
                                    asp-action="Index">
 
@@ -64,19 +74,19 @@
                                 </a>
 
                             </li>
+
+                            <li class="nav-item">
+
+                                <a class="nav-link"
+                                   asp-controller="Groups"
+                                   asp-action="Index">
+
+                                    Groups
+
+                                </a>
+
+                            </li>
                         }
-
-                        <li class="nav-item">
-
-                            <a class="nav-link text-dark"
-                               asp-controller="Home"
-                               asp-action="Privacy">
-
-                                Privacy
-
-                            </a>
-
-                        </li>
 
                     </ul>
 
@@ -100,7 +110,7 @@
 
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Toast -->
 
     <div class="toast-container position-fixed bottom-0 end-0 p-3"
          style="z-index:9999">
@@ -161,19 +171,29 @@
 
     <script>
 
-        function showToast(title, body) 
-        {
+        function showToast(title, body) {
+
             document.getElementById("toastTitle").innerHTML = title;
+
             document.getElementById("toastBody").innerHTML = body;
+
             let toast = new bootstrap.Toast(document.getElementById("liveToast"));
+
             toast.show();
+
         }
-        const notificationConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-        notificationConnection.on("ReceiveNotification",function(id,title,content,url)
-            {
-                showToast(title,content);
-            });
-            notificationConnection.start();
+
+        const notificationConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        notificationConnection.on("ReceiveNotification", function (id, title, content, url) {
+
+            showToast(title, content);
+
+        });
+
+        notificationConnection.start();
 
     </script>
 
