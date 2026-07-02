@@ -1,0 +1,147 @@
+﻿@model SignalRTask.ViewModels.Groups.GroupChatVM
+
+@{
+    ViewData["Title"] = Model.Room.Name;
+}
+
+<div class="chat-container">
+
+    <div class="chat-header">
+
+        <h4>@Model.Room.Name</h4>
+
+        <a asp-action="Index"
+           class="btn btn-light btn-sm">
+
+            Back
+
+        </a>
+
+    </div>
+
+    <div class="chat-body" id="chatBody">
+
+        @foreach (var message in Model.Messages)
+        {
+            <div class="message-row">
+
+                <div class="message-box">
+
+                    <b>@message.Sender.UserName</b>
+
+                    <br />
+
+                    @message.Content
+
+                    <br />
+
+                    <small>
+
+                        @message.SentAt.ToString("hh:mm tt")
+
+                    </small>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+    <div class="chat-footer">
+
+        <input type="hidden"
+               id="roomName"
+               value="@Model.Room.Name" />
+
+        <div class="input-group">
+
+            <input id="txtMessage"
+                   class="form-control"
+                   placeholder="Type message..." />
+
+            <button class="btn btn-primary"
+                    onclick="sendGroupMessage()">
+
+                Send
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.on("ReceiveRoomMessage",
+        function(user,message,sentAt)
+        {
+            let html=`
+            <div class="message-row">
+
+                <div class="message-box">
+
+                    <b>${user}</b>
+
+                    <br>
+
+                    ${message}
+
+                    <br>
+
+                    <small>
+
+                       ${new Date(sentAt).toLocaleTimeString([],{
+                            hour:'2-digit',
+                            minute:'2-digit'
+                        })}
+
+                    </small>
+
+                </div>
+
+            </div>
+            `;
+
+            chatBody.insertAdjacentHTML("beforeend",html);
+
+            chatBody.scrollTop=chatBody.scrollHeight;
+
+        });
+
+        connection.start().then(function(){
+
+            connection.invoke(
+                "JoinRoom",
+                document.getElementById("roomName").value);
+
+        });
+
+        async function sendGroupMessage()
+        {
+            let room=document.getElementById("roomName").value;
+
+            let msg=document.getElementById("txtMessage").value.trim();
+
+            if(msg=="")
+                return;
+
+            await connection.invoke(
+                "SendMessageToRoom",
+                room,
+                msg);
+
+            txtMessage.value="";
+        }
+
+    </script>
+
+}

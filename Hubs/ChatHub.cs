@@ -86,11 +86,40 @@ namespace SignalRTask.Hubs
 
         public async Task SendMessageToRoom(string roomName, string message)
         {
-            //string user = Context.User.Identity.Name;
-            string user = Context.User?.Identity?.Name ?? "Desktop Client";
+            if (string.IsNullOrWhiteSpace(message))
+                return;
+
+            string senderId = Context.UserIdentifier!;
+
+            string senderName = Context.User?.Identity?.Name ?? "Unknown";
+
+            var room = await context.Rooms
+                .FirstOrDefaultAsync(r => r.Name == roomName);
+
+            if (room == null)
+                return;
+
+            GroupMessage groupMessage = new()
+            {
+                RoomId = room.Id,
+                SenderId = senderId,
+                Content = message.Trim()
+            };
+
+            context.GroupMessages.Add(groupMessage);
+
+            await context.SaveChangesAsync();
+
+            await context.Entry(groupMessage)
+                .Reference(x => x.Sender)
+                .LoadAsync();
 
             await Clients.Group(roomName)
-                         .SendAsync("ReceiveRoomMessage", user, message);
+                .SendAsync(
+                    "ReceiveRoomMessage",
+                    senderName,
+                    groupMessage.Content,
+                    groupMessage.SentAt);
         }
 
         public async Task SendPrivateMessage(string userId, string message)
