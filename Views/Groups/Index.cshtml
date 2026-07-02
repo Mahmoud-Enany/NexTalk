@@ -1,0 +1,52 @@
+﻿@model List<SignalRTask.Models.Rooms>
+
+@{
+    ViewData["Title"] = "My Groups";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">My Groups</h2>
+
+    <div class="row">
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">
+
+                You haven't joined any groups yet.
+
+            </div>
+        }
+        else
+        {
+            foreach (var group in Model)
+            {
+                <div class="col-md-4 mb-3">
+
+                    <div class="card shadow-sm">
+
+                        <div class="card-body">
+
+                            <h5>@group.Name</h5>
+
+                            <a asp-controller="Groups"
+                               asp-action="Chat"
+                               asp-route-id="@group.Id"
+                               class="btn btn-primary mt-3">
+
+                                Open Chat
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        }
+
+    </div>
+
+</div>

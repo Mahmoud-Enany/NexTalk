@@ -1,3 +1,4 @@
+wwwroot\css\private-chat.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\js\site.js
@@ -61,7 +62,6 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\css\private-chat.css
 D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\wwwroot\css\site.css
 D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\wwwroot\favicon.ico
 D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\wwwroot\js\site.js

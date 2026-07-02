@@ -4,6 +4,7 @@ using SignalRTask.Data;
 using SignalRTask.Models;
 using SignalRTask.Models.chat;
 using SignalRTask.Models.Connection;
+using SignalRTask.Models.Groups;
 
 namespace SignalRTask.Hubs
 {
@@ -24,22 +25,63 @@ namespace SignalRTask.Hubs
 
         public async Task CreateRoom(string roomName)
         {
-            Rooms room = new Rooms();
-            room.Name = roomName;
+            if (string.IsNullOrWhiteSpace(roomName))
+                return;
+
+            if (await context.Rooms.AnyAsync(r => r.Name == roomName))
+                return;
+
+            Rooms room = new()
+            {
+                Name = roomName.Trim()
+            };
+
             context.Rooms.Add(room);
-            context.SaveChanges();
-            //string user = Context.User.Identity.Name;
+
+            await context.SaveChangesAsync();
+
             string user = Context.User?.Identity?.Name ?? "Desktop Client";
-            await Clients.All.SendAsync("RoomCreated", room.Id, room.Name, user);
+
+            await Clients.All.SendAsync(
+                "RoomCreated",
+                room.Id,
+                room.Name,
+                user);
         }
 
         public async Task JoinRoom(string roomName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
 
-            //string user = Context.User.Identity.Name;
             string user = Context.User?.Identity?.Name ?? "Desktop Client";
-            await Clients.All.SendAsync("UserJoinedRoom", user, roomName);
+
+            string userId = Context.UserIdentifier!;
+
+            var room = await context.Rooms
+                .FirstOrDefaultAsync(r => r.Name == roomName);
+
+            if (room != null)
+            {
+                bool alreadyJoined = await context.RoomMembers.AnyAsync(x =>
+                    x.RoomId == room.Id &&
+                    x.UserId == userId);
+
+                if (!alreadyJoined)
+                {
+                    context.RoomMembers.Add(new RoomMember
+                    {
+                        RoomId = room.Id,
+                        UserId = userId
+                    });
+
+                    await context.SaveChangesAsync();
+                }
+            }
+
+            await Clients.All.SendAsync(
+                "UserJoinedRoom",
+                user,
+                roomName);
         }
 
         public async Task SendMessageToRoom(string roomName, string message)
