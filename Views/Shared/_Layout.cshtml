@@ -161,17 +161,19 @@
 
     <script>
 
-        function showToast(title, body) {
-
+        function showToast(title, body) 
+        {
             document.getElementById("toastTitle").innerHTML = title;
-
             document.getElementById("toastBody").innerHTML = body;
-
             let toast = new bootstrap.Toast(document.getElementById("liveToast"));
-
             toast.show();
-
         }
+        const notificationConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        notificationConnection.on("ReceiveNotification",function(id,title,content,url)
+            {
+                showToast(title,content);
+            });
+            notificationConnection.start();
 
     </script>
 

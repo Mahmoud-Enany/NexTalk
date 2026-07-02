@@ -113,7 +113,8 @@ namespace SignalRTask.Hubs
 
             await Clients.User(receiverId).SendAsync("ReceivePrivateChatMessage",privateMessage.Id,senderId,senderName,message,privateMessage.SentAt);
 
-            await Clients.User(receiverId).SendAsync("ShowToast","New Message",$"{senderName}: {message}");
+            Notification notification = await context.Notifications.OrderByDescending(n => n.Id).FirstAsync(n => n.UserId == receiverId);
+            await Clients.User(receiverId).SendAsync("ReceiveNotification",notification.Id,notification.Title, notification.Content,notification.Url);
 
             privateMessage.IsDelivered = true;
 
