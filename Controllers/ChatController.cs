@@ -64,5 +64,18 @@ namespace SignalRTask.Controllers
             return Json(notifications);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetUnreadNotificationsCount()
+        {
+            string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            int count = await context.Notifications
+                .CountAsync(n =>
+                    n.UserId == currentUserId &&
+                    !n.IsRead);
+
+            return Json(count);
+        }
+
     }
 }

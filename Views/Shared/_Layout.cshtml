@@ -187,16 +187,22 @@
             .withUrl("/chatHub")
             .build();
 
-        notificationConnection.on("ReceiveNotification", function (id, title, content, url) {
+                notificationConnection.on("ReceiveNotification", function (id, title, content, url) {
 
             showToast(title, content);
+
+            loadNotifications();
+
+            loadUnreadCount();
 
         });
 
         notificationConnection.start();
-                loadNotifications();
+        loadNotifications();
+        loadUnreadCount();
 
-        async function loadNotifications() {
+        async function loadNotifications() 
+        {
 
             let response = await fetch("/Chat/GetNotifications");
 
@@ -227,6 +233,28 @@
                     </li>`;
 
             });
+
+        }
+                async function loadUnreadCount() {
+
+            let response = await fetch("/Chat/GetUnreadNotificationsCount");
+
+            let count = await response.json();
+
+            let badge = document.getElementById("notificationCount");
+
+            if (count > 0) {
+
+                badge.style.display = "";
+
+                badge.innerHTML = count;
+
+            }
+            else {
+
+                badge.style.display = "none";
+
+            }
 
         }
 
