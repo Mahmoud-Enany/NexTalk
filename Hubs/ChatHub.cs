@@ -280,7 +280,7 @@ namespace SignalRTask.Hubs
         {
             var message = await context.PrivateMessages.FindAsync(messageId);
 
-            if (message == null)
+            if (message == null || message.IsDeleted)
                 return;
 
             message.IsDeleted = true;
@@ -295,10 +295,13 @@ namespace SignalRTask.Hubs
         {
             var message = await context.PrivateMessages.FindAsync(messageId);
 
-            if (message == null)
+            if (message == null || message.IsDeleted)
                 return;
 
-            message.Content = newMessage;
+            if (string.IsNullOrWhiteSpace(newMessage))
+                return;
+
+            message.Content = newMessage.Trim();
 
             await context.SaveChangesAsync();
 
@@ -306,7 +309,7 @@ namespace SignalRTask.Hubs
                 .SendAsync(
                     "MessageEdited",
                     messageId,
-                    newMessage);
+                    message.Content);
         }
 
 
