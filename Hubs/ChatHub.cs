@@ -90,10 +90,10 @@ namespace SignalRTask.Hubs
                 return;
 
             string senderId = Context.UserIdentifier!;
-
             string senderName = Context.User?.Identity?.Name ?? "Unknown";
 
             var room = await context.Rooms
+                .Include(r => r.Members)
                 .FirstOrDefaultAsync(r => r.Name == roomName);
 
             if (room == null)
@@ -110,16 +110,39 @@ namespace SignalRTask.Hubs
 
             await context.SaveChangesAsync();
 
-            await context.Entry(groupMessage)
-                .Reference(x => x.Sender)
-                .LoadAsync();
-
             await Clients.Group(roomName)
                 .SendAsync(
                     "ReceiveRoomMessage",
                     senderName,
                     groupMessage.Content,
                     groupMessage.SentAt);
+
+            foreach (var member in room.Members)
+            {
+                if (member.UserId == senderId)
+                    continue;
+
+                Notification notification = new()
+                {
+                    UserId = member.UserId,
+                    Title = $"New message in {room.Name}",
+                    Content = $"{senderName}: {message}",
+                    Type = NotificationType.GroupMessage,
+                    Url = $"/Groups/Chat/{room.Id}"
+                };
+
+                context.Notifications.Add(notification);
+
+                await context.SaveChangesAsync();
+
+                await Clients.User(member.UserId)
+                    .SendAsync(
+                        "ReceiveNotification",
+                        notification.Id,
+                        notification.Title,
+                        notification.Content,
+                        notification.Url);
+            }
         }
 
         public async Task SendPrivateMessage(string userId, string message)
