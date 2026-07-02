@@ -40,9 +40,35 @@
 
             <div class="message-row @(mine ? "my-message" : "friend-message")">
 
-                <div class="message-box" id="msg-@message.Id">
+                <div class="message-box position-relative" id="msg-@message.Id">
 
                     @message.Content
+                    @if (message.SenderId == (string)ViewBag.CurrentUserId)
+                    {
+                        <div class="dropdown position-absolute top-0 end-0">
+
+                            <button class="btn btn-sm text-white border-0"
+                                    data-bs-toggle="dropdown">
+                                ⋮
+                            </button>
+
+                            <ul class="dropdown-menu">
+
+                                <li>
+
+                                    <button class="dropdown-item text-danger"
+                                            onclick="deleteMessage(@message.Id)">
+
+                                        Delete
+
+                                    </button>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    }
 
                     <br />
 
@@ -189,6 +215,14 @@
             }
         });
 
+                connection.on("MessageDeleted", function(messageId)
+        {
+            let msg = document.getElementById("msg-" + messageId);
+
+            if(msg)
+                msg.closest(".message-row").remove();
+        });
+
                 connection.start().then(async () => {
 
             const friendId = document.getElementById("friendId").value;
@@ -232,5 +266,13 @@
             connection.invoke("ClearActiveChat");
 
         });
+
+                async function deleteMessage(messageId)
+        {
+            if (!confirm("Delete this message?"))
+                return;
+
+            await connection.invoke("DeleteMessage", messageId);
+        }
     </script>
 }
