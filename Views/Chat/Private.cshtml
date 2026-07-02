@@ -107,9 +107,8 @@
 {
     <script>
         let typingTimeout;
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/chatHub")
-            .build();
+        const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        const activeChatUserId = document.getElementById("friendId").value;
             connection.on("ShowToast", function (title, body) 
             {
                 showToast(title, body);

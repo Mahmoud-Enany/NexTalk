@@ -27,6 +27,8 @@ namespace SignalRTask.Data
 
         public DbSet<UserConnection> UserConnections { get; set; }
 
+        public DbSet<ActiveChat> ActiveChats { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

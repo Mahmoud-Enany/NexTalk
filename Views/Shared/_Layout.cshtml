@@ -189,6 +189,14 @@
 
                 notificationConnection.on("ReceiveNotification", function (id, title, content, url) {
 
+            let currentPage = window.location.pathname.toLowerCase();
+
+            if (currentPage === url.toLowerCase()) {
+
+                return;
+
+            }
+
             showToast(title, content);
 
             loadNotifications();
