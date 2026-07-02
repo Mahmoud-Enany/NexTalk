@@ -67,6 +67,17 @@
 
                                 <li>
 
+                                    <button class="dropdown-item"
+                                            onclick="editMessage(@message.Id)">
+
+                                        Edit
+
+                                    </button>
+
+                                </li>
+
+                                <li>
+
                                     <button class="dropdown-item text-danger"
                                             onclick="deleteMessage(@message.Id)">
 
@@ -75,7 +86,6 @@
                                     </button>
 
                                 </li>
-
                             </ul>
 
                         </div>
@@ -272,6 +282,22 @@
 
         });
 
+
+                connection.on("MessageEdited", function(messageId,newMessage){
+
+            let msg=document.getElementById("msg-"+messageId);
+
+            if(!msg)
+                return;
+
+            let delivery=msg.querySelector("small").outerHTML;
+
+            msg.innerHTML=
+                newMessage+
+                "<br>"+
+                delivery;
+
+        });
                 connection.start().then(async () => {
 
             const friendId = document.getElementById("friendId").value;
@@ -322,6 +348,19 @@
                 return;
 
             await connection.invoke("DeleteMessage", messageId);
+        }
+
+                async function editMessage(messageId)
+        {
+            let text = prompt("Edit message");
+
+            if (text == null || text.trim() === "")
+                return;
+
+            await connection.invoke(
+                "EditMessage",
+                messageId,
+                text);
         }
     </script>
 }

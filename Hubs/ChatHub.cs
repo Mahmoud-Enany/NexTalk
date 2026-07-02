@@ -291,6 +291,24 @@ namespace SignalRTask.Hubs
                 .SendAsync("MessageDeleted", messageId);
         }
 
+        public async Task EditMessage(int messageId, string newMessage)
+        {
+            var message = await context.PrivateMessages.FindAsync(messageId);
+
+            if (message == null)
+                return;
+
+            message.Content = newMessage;
+
+            await context.SaveChangesAsync();
+
+            await Clients.Users(message.SenderId, message.ReceiverId)
+                .SendAsync(
+                    "MessageEdited",
+                    messageId,
+                    newMessage);
+        }
+
 
 
     }
