@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using SignalRTask.Data;
 using SignalRTask.Models;
+using SignalRTask.Models.chat;
 using SignalRTask.Models.Connection;
-using Microsoft.EntityFrameworkCore;
 
 namespace SignalRTask.Hubs
 {
@@ -98,15 +99,21 @@ namespace SignalRTask.Hubs
             context.PrivateMessages.Add(privateMessage);
 
             await context.SaveChangesAsync();
+            context.Notifications.Add(new Notification
+            {
+                UserId = receiverId,
+                Title = "New Message",
+                Content = $"{senderName}: {message}",
+                Type = NotificationType.PrivateMessage,
+                IsRead = false,
+                Url = $"/Chat/Private/{senderId}"
+            });
 
-            await Clients.User(receiverId)
-                .SendAsync(
-                    "ReceivePrivateChatMessage",
-                    privateMessage.Id,
-                    senderId,
-                    senderName,
-                    message,
-                    privateMessage.SentAt);
+            await context.SaveChangesAsync();
+
+            await Clients.User(receiverId).SendAsync("ReceivePrivateChatMessage",privateMessage.Id,senderId,senderName,message,privateMessage.SentAt);
+
+            await Clients.User(receiverId).SendAsync("ShowToast","New Message",$"{senderName}: {message}");
 
             privateMessage.IsDelivered = true;
 

@@ -110,63 +110,50 @@
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
+            connection.on("ShowToast", function (title, body) 
+            {
+                showToast(title, body);
+            });
 
-                connection.on("ReceivePrivateChatMessage",
-        function(messageId,senderId,senderName,message,sentAt){
-
-            let myId='@ViewBag.CurrentUserId';
-
-            let mine=senderId===myId;
-
-            let checks=mine?"<span class='delivery'>✓</span>":"";
-
-            let html=`
-
-                <div class="message-row ${mine?"my-message":"friend-message"}">
-
+                connection.on("ReceivePrivateChatMessage",function(messageId,senderId,senderName,message,sentAt)
+                {
+                    let myId='@ViewBag.CurrentUserId';
+                    let mine=senderId===myId;
+                    let checks=mine?"<span class='delivery'>✓</span>":"";
+                    let html=`
+                    <div class="message-row ${mine?"my-message":"friend-message"}">
                     <div class="message-box" id="msg-${messageId}">
-
-                        ${message}
-
-                        <br>
-
-                        <small>
-
-                            ${new Date(sentAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
-
-                            ${checks}
-
-                        </small>
-
+                    ${message}
+                    <br>
+                    <small>
+                    ${new Date(sentAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+                    ${checks}
+                    </small>
                     </div>
-
                 </div>
             `;
 
             chatBody.insertAdjacentHTML("beforeend",html);
-
             chatBody.scrollTop=chatBody.scrollHeight;
 
-            if (!mine) {
-
+            if (!mine) 
+            {
                 connection.invoke("MarkMessageDelivered", messageId);
-
             }
-
         });
 
-        connection.on("MessageDelivered",function(messageId){
-
+        connection.on("MessageDelivered",function(messageId)
+        {
             let msg=document.querySelector(`#msg-${messageId} .delivery`);
-
-            if(msg){
-
+            if(msg)
+            {
                 msg.innerHTML="✓✓";
-
             }
 
         });
-        connection.on("MessageSeen", function (messageId) {
+
+        connection.on("MessageSeen", function (messageId) 
+        {
             let msg = document.querySelector(`#msg-${messageId} .delivery`);
             if (msg)
             {

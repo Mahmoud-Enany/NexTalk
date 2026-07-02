@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\chat\\private.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\chat\\private.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\wwwroot\\css\\private-chat.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -38,24 +42,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKkAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-01T01:16:41.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Private.cshtml",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Chat\\Private.cshtml",
               "RelativeDocumentMoniker": "Views\\Chat\\Private.cshtml",
               "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Chat\\Private.cshtml",
               "RelativeToolTip": "Views\\Chat\\Private.cshtml",
-              "ViewState": "AgIAALQAAAAAAAAAAADwv8gAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAAHEAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-06-26T20:20:41.195Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "private-chat.css",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\wwwroot\\css\\private-chat.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\private-chat.css",
@@ -63,25 +80,24 @@
               "RelativeToolTip": "wwwroot\\css\\private-chat.css",
               "ViewState": "AgIAADQAAAAAAAAAAAAAwGAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-06-26T20:32:14.401Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-26T20:32:14.401Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ChatHub.cs",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Hubs\\ChatHub.cs",
               "RelativeDocumentMoniker": "Hubs\\ChatHub.cs",
               "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Hubs\\ChatHub.cs",
               "RelativeToolTip": "Hubs\\ChatHub.cs",
-              "ViewState": "AgIAAL4AAAAAAAAAAAAqwNgAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwGsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-26T20:37:29.858Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ChatPageVM.cs",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\ViewModels\\Chat\\ChatPageVM.cs",
               "RelativeDocumentMoniker": "ViewModels\\Chat\\ChatPageVM.cs",
@@ -93,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "PrivateChatVM.cs",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\ViewModels\\Chat\\PrivateChatVM.cs",
               "RelativeDocumentMoniker": "ViewModels\\Chat\\PrivateChatVM.cs",
@@ -105,7 +121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Friends\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Friends\\Index.cshtml",
@@ -117,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "FriendsController.cs",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\FriendsController.cs",
               "RelativeDocumentMoniker": "Controllers\\FriendsController.cs",
