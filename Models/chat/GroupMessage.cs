@@ -18,5 +18,7 @@ namespace SignalRTask.Models.chat
         public DateTime SentAt { get; set; } = DateTime.UtcNow;
 
         public bool IsDeleted { get; set; }
+
+        public bool IsEdited { get; set; }
     }
 }

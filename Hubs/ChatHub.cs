@@ -378,6 +378,31 @@ namespace SignalRTask.Hubs
                     message.Content);
         }
 
+        public async Task DeleteGroupMessage(int messageId)
+        {
+            string userId = Context.UserIdentifier!;
+
+            var message = await context.GroupMessages
+                .Include(x => x.Room)
+                .FirstOrDefaultAsync(x => x.Id == messageId);
+
+            if (message == null)
+                return;
+
+            if (message.SenderId != userId)
+                return;
+
+            if (message.IsDeleted)
+                return;
+
+            message.IsDeleted = true;
+
+            await context.SaveChangesAsync();
+
+            await Clients.Group(message.Room.Name)
+                .SendAsync("GroupMessageDeleted", messageId);
+        }
+
 
 
     }

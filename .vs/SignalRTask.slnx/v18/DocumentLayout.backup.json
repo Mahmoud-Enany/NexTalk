@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\wwwroot\\css\\private-chat.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:wwwroot\\css\\private-chat.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\groups\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\groups\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -15,12 +11,20 @@
       "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\models\\chat\\groupmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:models\\chat\\groupmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\wwwroot\\css\\private-chat.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:wwwroot\\css\\private-chat.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\viewmodels\\groups\\groupchatvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\groups\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\groups\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\models\\chat\\groupmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:models\\chat\\groupmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\models\\groups\\roommember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -71,6 +71,58 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Chat.cshtml",
+              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Groups\\Chat.cshtml",
+              "RelativeDocumentMoniker": "Views\\Groups\\Chat.cshtml",
+              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Groups\\Chat.cshtml",
+              "RelativeToolTip": "Views\\Groups\\Chat.cshtml",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAAwLkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-02T14:25:33.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GroupMessage.cs",
+              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Models\\chat\\GroupMessage.cs",
+              "RelativeDocumentMoniker": "Models\\chat\\GroupMessage.cs",
+              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Models\\chat\\GroupMessage.cs",
+              "RelativeToolTip": "Models\\chat\\GroupMessage.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAywBUAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-02T14:06:28.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Hubs\\ChatHub.cs",
+              "RelativeDocumentMoniker": "Hubs\\ChatHub.cs",
+              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Hubs\\ChatHub.cs",
+              "RelativeToolTip": "Hubs\\ChatHub.cs",
+              "ViewState": "AgIAAHABAAAAAAAAAAAswJMBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-26T20:37:29.858Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GroupsController.cs",
+              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\GroupsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GroupsController.cs",
+              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\GroupsController.cs",
+              "RelativeToolTip": "Controllers\\GroupsController.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAQwC8AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-02T14:11:26.103Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "private-chat.css",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\wwwroot\\css\\private-chat.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\private-chat.css",
@@ -83,20 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Chat.cshtml",
-              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Groups\\Chat.cshtml",
-              "RelativeDocumentMoniker": "Views\\Groups\\Chat.cshtml",
-              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Groups\\Chat.cshtml",
-              "RelativeToolTip": "Views\\Groups\\Chat.cshtml",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAAAHUAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-02T14:25:33.639Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -108,32 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ChatHub.cs",
-              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Hubs\\ChatHub.cs",
-              "RelativeDocumentMoniker": "Hubs\\ChatHub.cs",
-              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Hubs\\ChatHub.cs",
-              "RelativeToolTip": "Hubs\\ChatHub.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAQwFgAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-26T20:37:29.858Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "GroupsController.cs",
-              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\GroupsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\GroupsController.cs",
-              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\GroupsController.cs",
-              "RelativeToolTip": "Controllers\\GroupsController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAcwCkAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-02T14:11:26.103Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "GroupChatVM.cs",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\ViewModels\\Groups\\GroupChatVM.cs",
               "RelativeDocumentMoniker": "ViewModels\\Groups\\GroupChatVM.cs",
@@ -145,7 +159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
@@ -157,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Groups\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Groups\\Index.cshtml",
@@ -166,18 +180,6 @@
               "ViewState": "AgIAABIAAAAAAAAAAAAcwDMAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-07-02T14:11:53.824Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "GroupMessage.cs",
-              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Models\\chat\\GroupMessage.cs",
-              "RelativeDocumentMoniker": "Models\\chat\\GroupMessage.cs",
-              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Models\\chat\\GroupMessage.cs",
-              "RelativeToolTip": "Models\\chat\\GroupMessage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-02T14:06:28.181Z"
             },
             {
               "$type": "Document",

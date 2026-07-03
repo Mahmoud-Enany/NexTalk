@@ -27,7 +27,7 @@
 
             <div class="message-row @(mine ? "my-message" : "friend-message")">
 
-                <div class="message-box">
+                <div class="message-box position-relative" id="msg-@message.Id">
 
                     @if (!mine)
                     {
@@ -35,13 +35,53 @@
                         <br />
                     }
 
-                    @message.Content
+                    @if (mine && !message.IsDeleted)
+                    {
+                        <div class="dropdown position-absolute top-0 end-0">
 
-                    <br />
+                            <button class="btn btn-sm border-0 text-white"
+                                    data-bs-toggle="dropdown">
 
-                    <small>
-                        @message.SentAt.ToString("hh:mm tt")
-                    </small>
+                                ⋮
+
+                            </button>
+
+                            <ul class="dropdown-menu">
+
+                                <li>
+
+                                    <button class="dropdown-item text-danger"
+                                            onclick="deleteGroupMessage(@message.Id)">
+
+                                        Delete
+
+                                    </button>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    }
+
+                    @if (message.IsDeleted)
+                    {
+                        <i class="bi bi-trash text-danger"></i>
+
+                        <em class="text-muted">
+                            This message was deleted
+                        </em>
+                    }
+                    else
+                    {
+                        @message.Content
+
+                        <br />
+
+                        <small>
+                            @message.SentAt.ToString("hh:mm tt")
+                        </small>
+                    }
 
                 </div>
 
@@ -82,13 +122,10 @@
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
-
-                connection.on("ReceiveRoomMessage", function (user, message, sentAt)
-        {
+            connection.on("ReceiveRoomMessage", function (user, message, sentAt)
+            {
             let myName = '@User.Identity!.Name?.Split("@")[0]';
-
             let mine = user === myName;
-
             let html=`
                 <div class="message-row ${mine ? "my-message":"friend-message"}">
 
@@ -116,6 +153,21 @@
 
             chatBody.scrollTop=chatBody.scrollHeight;
         });
+        connection.on("GroupMessageDeleted", function(messageId)
+        {
+            let msg=document.getElementById("msg-"+messageId);
+
+            if(!msg)
+                return;
+
+            msg.innerHTML=`
+                <i class="bi bi-trash text-danger"></i>
+                <em class="text-muted">
+                    This message was deleted
+                </em>
+            `;
+        });
+
 
         connection.start().then(function(){
 
@@ -140,6 +192,16 @@
                 msg);
 
             txtMessage.value="";
+        }
+
+        async function deleteGroupMessage(messageId)
+        {
+            if(!confirm("Delete this message?"))
+                return;
+
+            await connection.invoke(
+                "DeleteGroupMessage",
+                messageId);
         }
 
     </script>
