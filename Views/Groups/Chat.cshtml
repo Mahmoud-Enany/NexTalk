@@ -8,7 +8,21 @@
 
     <div class="chat-header">
 
-        <h4>@Model.Room.Name</h4>
+        <div>
+
+            <h4 class="mb-0">
+
+                @Model.Room.Name
+
+            </h4>
+
+            <small class="text-muted">
+
+                @Model.MembersCount Members
+
+            </small>
+
+        </div>
 
         <a asp-action="Index"
            class="btn btn-light btn-sm">

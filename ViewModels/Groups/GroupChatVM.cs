@@ -8,5 +8,7 @@ namespace SignalRTask.ViewModels.Groups
         public Rooms Room { get; set; } = null!;
 
         public List<GroupMessage> Messages { get; set; } = new();
+
+        public int MembersCount { get; set; }
     }
 }

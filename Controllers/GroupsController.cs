@@ -42,10 +42,7 @@ namespace SignalRTask.Controllers
             if (!joined)
                 return RedirectToAction(nameof(Index));
 
-            var room = await context.Rooms
-                .Include(r => r.Messages)
-                .ThenInclude(m => m.Sender)
-                .FirstAsync(r => r.Id == id);
+            var room = await context.Rooms.Include(r => r.Messages).ThenInclude(m => m.Sender).Include(r => r.Members).FirstAsync(r => r.Id == id);
 
             foreach (var message in room.Messages)
             {
@@ -59,11 +56,11 @@ namespace SignalRTask.Controllers
             GroupChatVM vm = new()
             {
                 Room = room,
+                MembersCount = room.Members.Count,
                 Messages = room.Messages
-                    .OrderBy(x => x.SentAt)
-                    .ToList()
+        .OrderBy(x => x.SentAt)
+        .ToList()
             };
-
 
             return View(vm);
         }
