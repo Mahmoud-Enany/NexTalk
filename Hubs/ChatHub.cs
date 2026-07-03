@@ -403,6 +403,38 @@ namespace SignalRTask.Hubs
                 .SendAsync("GroupMessageDeleted", messageId);
         }
 
+        public async Task EditGroupMessage(int messageId, string newContent)
+        {
+            string userId = Context.UserIdentifier!;
+
+            var message = await context.GroupMessages
+                .Include(x => x.Room)
+                .FirstOrDefaultAsync(x => x.Id == messageId);
+
+            if (message == null)
+                return;
+
+            if (message.SenderId != userId)
+                return;
+
+            if (message.IsDeleted)
+                return;
+
+            if (string.IsNullOrWhiteSpace(newContent))
+                return;
+
+            message.Content = newContent.Trim();
+            message.IsEdited = true;
+
+            await context.SaveChangesAsync();
+
+            await Clients.Group(message.Room.Name)
+                .SendAsync(
+                    "GroupMessageEdited",
+                    message.Id,
+                    message.Content);
+        }
+
 
 
     }

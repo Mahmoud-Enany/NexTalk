@@ -50,6 +50,17 @@
 
                                 <li>
 
+                                    <button class="dropdown-item"
+                                            onclick="editGroupMessage(@message.Id)">
+
+                                        Edit
+
+                                    </button>
+
+                                </li>
+
+                                <li>
+
                                     <button class="dropdown-item text-danger"
                                             onclick="deleteGroupMessage(@message.Id)">
 
@@ -74,12 +85,23 @@
                     }
                     else
                     {
-                        @message.Content
+                        <span class="message-content">
+
+                            @message.Content
+
+                        </span>
 
                         <br />
 
                         <small>
+
                             @message.SentAt.ToString("hh:mm tt")
+
+                            @if (message.IsEdited)
+                            {
+                                <span class="text-muted">(edited)</span>
+                            }
+
                         </small>
                     }
 
@@ -168,6 +190,24 @@
             `;
         });
 
+        connection.on("GroupMessageEdited", function(messageId,newContent){
+
+            let box=document.querySelector("#msg-"+messageId+" .message-content");
+
+            if(box)
+            {
+                box.innerHTML=newContent;
+            }
+
+            let small=document.querySelector("#msg-"+messageId+" small");
+
+            if(small && !small.innerHTML.includes("(edited)"))
+            {
+                small.innerHTML += ' <span class="text-muted">(edited)</span>';
+            }
+
+        });
+
 
         connection.start().then(function(){
 
@@ -203,6 +243,26 @@
                 "DeleteGroupMessage",
                 messageId);
         }
+
+        async function editGroupMessage(messageId)
+        {
+            let current=document.querySelector("#msg-"+messageId+" .message-content").innerText;
+
+            let text=prompt("Edit message",current);
+
+            if(text===null)
+                return;
+
+            if(text.trim()==="")
+                return;
+
+            await connection.invoke(
+                "EditGroupMessage",
+                messageId,
+                text);
+        }
+
+
 
     </script>
 
