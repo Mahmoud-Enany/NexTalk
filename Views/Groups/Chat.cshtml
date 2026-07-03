@@ -23,22 +23,24 @@
 
         @foreach (var message in Model.Messages)
         {
-            <div class="message-row">
+            bool mine = message.SenderId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            <div class="message-row @(mine ? "my-message" : "friend-message")">
 
                 <div class="message-box">
 
-                    <b>@message.Sender.UserName</b>
-
-                    <br />
+                    @if (!mine)
+                    {
+                        <strong>@message.Sender.UserName?.Split('@')[0]</strong>
+                        <br />
+                    }
 
                     @message.Content
 
                     <br />
 
                     <small>
-
                         @message.SentAt.ToString("hh:mm tt")
-
                     </small>
 
                 </div>
@@ -81,40 +83,38 @@
             .withUrl("/chatHub")
             .build();
 
-        connection.on("ReceiveRoomMessage",
-        function(user,message,sentAt)
+                connection.on("ReceiveRoomMessage", function (user, message, sentAt)
         {
+            let myName = '@User.Identity!.Name?.Split("@")[0]';
+
+            let mine = user === myName;
+
             let html=`
-            <div class="message-row">
+                <div class="message-row ${mine ? "my-message":"friend-message"}">
 
-                <div class="message-box">
+                    <div class="message-box">
 
-                    <b>${user}</b>
+                        ${mine ? "" : `<strong>${user}</strong><br>`}
 
-                    <br>
+                        ${message}
 
-                    ${message}
+                        <br>
 
-                    <br>
+                        <small>
+                            ${new Date(sentAt).toLocaleTimeString([],{
+                                hour:'2-digit',
+                                minute:'2-digit'
+                            })}
+                        </small>
 
-                    <small>
-
-                       ${new Date(sentAt).toLocaleTimeString([],{
-                            hour:'2-digit',
-                            minute:'2-digit'
-                        })}
-
-                    </small>
+                    </div>
 
                 </div>
-
-            </div>
             `;
 
             chatBody.insertAdjacentHTML("beforeend",html);
 
             chatBody.scrollTop=chatBody.scrollHeight;
-
         });
 
         connection.start().then(function(){

@@ -293,4 +293,4 @@ D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\bin\Debug\net10.0\Microsoft
 D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\bin\Debug\net10.0\Microsoft.AspNetCore.SignalR.Client.dll
 D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\bin\Debug\net10.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
 D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\obj\Debug\net10.0\SignalRTask.sourcelink.json
-D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\obj\Debug\net10.0\compressed\a73wa9atxc-{0}-uv20qwfc7p-uv20qwfc7p.gz
+D:\Documents\ITI\32_SignalR\Day2\Lab\Lab\SignalRTask\obj\Debug\net10.0\compressed\a73wa9atxc-{0}-2pprplu00y-2pprplu00y.gz

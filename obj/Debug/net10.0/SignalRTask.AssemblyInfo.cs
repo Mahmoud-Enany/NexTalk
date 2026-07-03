@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SignalRTask")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7add7d18fa194af98320d7b1ccfd43e09d28a55a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15f72c46abc7307ee2d71b49407f64073c1636c3")]
 [assembly: System.Reflection.AssemblyProductAttribute("SignalRTask")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SignalRTask")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

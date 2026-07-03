@@ -95,3 +95,42 @@
     color: #4fc3f7;
     font-weight: bold;
 }
+
+.message-row {
+    display: flex;
+    margin: 10px;
+}
+
+.my-message {
+    justify-content: flex-end;
+}
+
+.friend-message {
+    justify-content: flex-start;
+}
+
+.message-box {
+    max-width: 70%;
+    padding: 12px;
+    border-radius: 15px;
+    word-break: break-word;
+}
+
+.my-message .message-box {
+    background: #0d6efd;
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+.friend-message .message-box {
+    background: #f1f1f1;
+    color: #212529;
+    border-bottom-left-radius: 5px;
+}
+
+.message-box small {
+    display: block;
+    margin-top: 5px;
+    opacity: .8;
+    font-size: 12px;
+}

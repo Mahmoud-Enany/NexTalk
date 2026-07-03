@@ -47,6 +47,15 @@ namespace SignalRTask.Controllers
                 .ThenInclude(m => m.Sender)
                 .FirstAsync(r => r.Id == id);
 
+            foreach (var message in room.Messages)
+            {
+                if (!string.IsNullOrEmpty(message.Sender.UserName))
+                {
+                    message.Sender.UserName =
+                        message.Sender.UserName.Split('@')[0];
+                }
+            }
+
             GroupChatVM vm = new()
             {
                 Room = room,
@@ -54,6 +63,7 @@ namespace SignalRTask.Controllers
                     .OrderBy(x => x.SentAt)
                     .ToList()
             };
+
 
             return View(vm);
         }
