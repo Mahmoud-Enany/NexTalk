@@ -11,10 +11,12 @@
         <div>
 
             <h4 class="mb-0">
-
                 @Model.Room.Name
-
             </h4>
+
+            <input type="hidden"
+                   id="roomId"
+                   value="@Model.Room.Id" />
 
             <small class="text-muted">
 
@@ -24,7 +26,8 @@
 
             <br />
 
-            <small class="text-success">
+            <small id="onlineCount"
+                   class="text-success">
 
                 🟢 @Model.OnlineUsers.Count Online
 
@@ -32,7 +35,8 @@
 
             @if (Model.OnlineUsers.Any())
             {
-                <div class="mt-2">
+                <div id="onlineUsers"
+                     class="mt-2">
 
                     @foreach (var user in Model.OnlineUsers)
                     {
@@ -182,26 +186,78 @@
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
-            connection.on("ReceiveRoomMessage", function (user, message, sentAt)
-            {
-            let myName = '@User.Identity!.Name?.Split("@")[0]';
-            let mine = user === myName;
+
+        connection.on("ReceiveRoomMessage", function (messageId, senderId, user, message, sentAt)
+        {
+            let myId='@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value';
+
+            let mine = senderId === myId;
+
             let html=`
                 <div class="message-row ${mine ? "my-message":"friend-message"}">
 
-                    <div class="message-box">
+                    <div class="message-box position-relative" id="msg-${messageId}">
 
-                        ${mine ? "" : `<strong>${user}</strong><br>`}
+                        ${
+                            mine
+                            ?
+                            `
+                            <div class="dropdown position-absolute top-0 end-0">
 
-                        ${message}
+                                <button class="btn btn-sm border-0 text-white"
+                                        data-bs-toggle="dropdown">
+
+                                    ⋮
+
+                                </button>
+
+                                <ul class="dropdown-menu">
+
+                                    <li>
+
+                                        <button class="dropdown-item"
+                                                onclick="editGroupMessage(${messageId})">
+
+                                            Edit
+
+                                        </button>
+
+                                    </li>
+
+                                    <li>
+
+                                        <button class="dropdown-item text-danger"
+                                                onclick="deleteGroupMessage(${messageId})">
+
+                                            Delete
+
+                                        </button>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                            `
+                            :
+                            `<strong>${user}</strong><br>`
+                        }
+
+                        <span class="message-content">
+
+                            ${message}
+
+                        </span>
 
                         <br>
 
                         <small>
+
                             ${new Date(sentAt).toLocaleTimeString([],{
                                 hour:'2-digit',
                                 minute:'2-digit'
                             })}
+
                         </small>
 
                     </div>
@@ -213,6 +269,7 @@
 
             chatBody.scrollTop=chatBody.scrollHeight;
         });
+
         connection.on("GroupMessageDeleted", function(messageId)
         {
             let msg=document.getElementById("msg-"+messageId);
@@ -246,12 +303,20 @@
 
         });
 
+        connection.on("GroupOnlineUsersChanged",function(){
 
-        connection.start().then(function(){
+            refreshOnlineMembers();
 
-            connection.invoke(
+        });
+
+
+        connection.start().then(async function(){
+
+            await connection.invoke(
                 "JoinRoom",
                 document.getElementById("roomName").value);
+
+            refreshOnlineMembers();
 
         });
 
@@ -300,7 +365,29 @@
                 text);
         }
 
+        async function refreshOnlineMembers()
+        {
+            let roomId=document.getElementById("roomId").value;
 
+            let response=await fetch("/Groups/GetOnlineMembers?roomId="+roomId);
+
+            let users=await response.json();
+
+            document.getElementById("onlineCount").innerHTML=
+                `🟢 ${users.length} Online`;
+
+            let div=document.getElementById("onlineUsers");
+
+            div.innerHTML="";
+
+            users.forEach(function(user)
+            {
+                div.innerHTML+=
+                `<span class="badge bg-success me-1">
+                    ${user}
+                </span>`;
+            });
+        }
 
     </script>
 

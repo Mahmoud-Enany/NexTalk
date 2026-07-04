@@ -110,11 +110,13 @@ namespace SignalRTask.Hubs
             await context.SaveChangesAsync();
 
             await Clients.Group(roomName)
-                .SendAsync(
-                    "ReceiveRoomMessage",
-                    senderName,
-                    groupMessage.Content,
-                    groupMessage.SentAt);
+    .SendAsync(
+        "ReceiveRoomMessage",
+        groupMessage.Id,
+        senderId,
+        senderName,
+        groupMessage.Content,
+        groupMessage.SentAt);
         }
 
         public async Task SendPrivateMessage(string userId, string message)
@@ -286,6 +288,7 @@ namespace SignalRTask.Hubs
                 await context.SaveChangesAsync();
 
                 await Clients.All.SendAsync("UserOnline", Context.UserIdentifier);
+                await Clients.All.SendAsync("GroupOnlineUsersChanged");
             }
 
             await base.OnConnectedAsync();
@@ -308,6 +311,7 @@ namespace SignalRTask.Hubs
                 if (!stillOnline)
                 {
                     await Clients.All.SendAsync("UserOffline", connection.UserId);
+                    await Clients.All.SendAsync("GroupOnlineUsersChanged");
                 }
             }
 

@@ -74,6 +74,24 @@ namespace SignalRTask.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetOnlineMembers(int roomId)
+        {
+            var onlineIds = await context.UserConnections
+                .Select(x => x.UserId)
+                .Distinct()
+                .ToListAsync();
+
+            var users = await context.RoomMembers
+                .Include(x => x.User)
+                .Where(x => x.RoomId == roomId &&
+                            onlineIds.Contains(x.UserId))
+                .Select(x => x.User.UserName!.Split('@')[0])
+                .ToListAsync();
+
+            return Json(users);
+        }
+
 
     }
 }
