@@ -108,7 +108,7 @@ wwwroot/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/NexTalk.git
+git clone https://github.com/Mahmoud-Enany/NexTalk.git
 ```
 
 ---
@@ -193,10 +193,7 @@ dotnet run
 **Mahmoud Enany**
 
 LinkedIn:
-> Add your LinkedIn profile
-
-GitHub:
-> Add your GitHub profile
+> https://www.linkedin.com/in/mahmoud-enany-ab3768220/
 
 ---
 
