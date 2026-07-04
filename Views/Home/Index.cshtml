@@ -8,27 +8,132 @@
 
     <div class="card shadow">
 
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">SignalR Chat Rooms</h3>
+        <div class="card-header bg-primary text-white py-4">
+
+            <h2 class="mb-1">
+
+                Welcome back,
+                @User.Identity?.Name?.Split('@')[0]
+                👋
+
+            </h2>
+
+            <p class="mb-0 opacity-75">
+
+                Manage your rooms and collaborate with your teammates in real-time.
+
+            </p>
+
         </div>
 
         <div class="card-body">
 
-            <div class="row g-2">
 
-                <div class="col-md-9">
-                    <input type="text" id="roomName" class="form-control" placeholder="Enter Room Name..." />
+            <div class="row mb-4">
+
+                <div class="col-md-3">
+
+                    <div class="card text-center border-0 shadow h-100">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-people-fill text-primary fs-2"></i>
+
+                            <h3>@Model.FriendsCount</h3>
+
+                            <p class="mb-0">Friends</p>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
                 <div class="col-md-3">
-                    <button onclick="CreateRoom()" class="btn btn-success w-100">
-                        Create Room
-                    </button>
+
+                    <div class="card text-center border-success shadow-sm">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-diagram-3-fill text-success fs-2"></i>
+
+                            <h3>@Model.RoomsCount</h3>
+
+                            <p class="mb-0">Rooms</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="card text-center border-warning shadow-sm">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-chat-dots-fill text-warning fs-2"></i>
+
+                            <h3>@Model.MessagesCount</h3>
+
+                            <p class="mb-0">Messages</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="card text-center border-info shadow-sm">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-wifi text-info fs-2"></i>
+
+                            <h3>@Model.OnlineUsersCount</h3>
+
+                            <p class="mb-0">Online</p>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
 
             <hr />
+
+
+            <div class="row g-2">
+
+                <div class="col-md-9">
+
+                    <input type="text"
+                           id="roomName"
+                           class="form-control"
+                           placeholder="Enter Room Name..." />
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <button onclick="CreateRoom()"
+                            class="btn btn-success w-100">
+
+                        Create Room
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <hr />
+
 
             <h5 class="mb-3">Available Rooms</h5>
 
@@ -36,11 +141,14 @@
 
                 <div class="col-md-9">
 
-                    <select id="roomsSelect" class="form-select">
+                    <select id="roomsSelect"
+                            class="form-select">
 
                         @foreach (var room in Model.Rooms)
                         {
-                            <option value="@room.Id">@room.Name</option>
+                            <option value="@room.Id">
+                                @room.Name
+                            </option>
                         }
 
                     </select>
@@ -49,78 +157,34 @@
 
                 <div class="col-md-3">
 
-                    <button onclick="JoinRoom()" class="btn btn-primary w-100">
+                    <button onclick="JoinRoom()"
+                            class="btn btn-primary w-100">
+
                         Join Room
+
                     </button>
 
-                </div>
-
-            </div>
-
-            <hr />
-
-            <h5>Users</h5>
-
-            <select id="usersSelect" class="form-select">
-
-                @foreach (var user in Model.Users)
-                {
-                    <option value="@user.Id">@user.Email</option>
-                }
-
-            </select>
-
-            <div class="row g-2 mt-2">
-
-                <div class="col-md-9">
-                    <input type="text" id="privateMessage" class="form-control" placeholder="Private Message..." />
-                </div>
-
-                <div class="col-md-3">
-                    <button onclick="SendPrivateMessage()" class="btn btn-warning w-100">
-                        Send Private
-                    </button>
                 </div>
 
             </div>
 
             <div class="mt-3 text-muted">
-                Total Rooms : <span id="roomsCount">@Model.Rooms.Count</span>
+
+                Total Rooms :
+                <span id="roomsCount">
+                    @Model.Rooms.Count
+                </span>
+
             </div>
 
             <hr />
+
 
             <h5>Activity Log</h5>
 
-            <ul id="activityLog" class="list-group"></ul>
-
-            <hr />
-
-            <h5>Room Chat</h5>
-
-            <select id="chatRoomSelect" class="form-select mb-2"></select>
-
-            <div class="row g-2">
-
-                <div class="col-md-9">
-                    <input type="text" id="message" class="form-control" placeholder="Type Message..." />
-                </div>
-
-                <div class="col-md-3">
-                    <button onclick="SendMessage()" class="btn btn-dark w-100">
-                        Send
-                    </button>
-                </div>
-
-            </div>
-
-            <ul id="messages" class="list-group mt-3"></ul>
-
-            <hr />
-
-            <h5>Private Messages</h5>
-
-            <ul id="privateMessages" class="list-group"></ul>
+            <ul id="activityLog"
+                class="list-group">
+            </ul>
 
         </div>
 
@@ -132,94 +196,48 @@
 
 <script>
 
-    const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chatHub")
+        .build();
 
     connection.start();
 
     function CreateRoom()
     {
-        let roomName = document.getElementById("roomName").value;
+        let roomName=document.getElementById("roomName").value;
 
-        connection.invoke("CreateRoom", roomName);
+        connection.invoke("CreateRoom",roomName);
     }
 
     function JoinRoom()
     {
-        let roomName = document.getElementById("roomsSelect").selectedOptions[0].text;
+        let roomName=document.getElementById("roomsSelect").selectedOptions[0].text;
 
-        connection.invoke("JoinRoom", roomName);
+        connection.invoke("JoinRoom",roomName);
+
+        window.location.href="/Groups/Chat/"+document.getElementById("roomsSelect").value;
     }
 
-    function SendMessage()
+    connection.on("RoomCreated",function(id,roomName,user)
     {
-        let roomName = document.getElementById("chatRoomSelect").value;
-
-        let message = document.getElementById("message").value;
-
-        connection.invoke("SendMessageToRoom", roomName, message);
-    }
-
-    function SendPrivateMessage()
-    {
-        let userId = document.getElementById("usersSelect").value;
-
-        let message = document.getElementById("privateMessage").value;
-
-        connection.invoke("SendPrivateMessage", userId, message);
-    }
-
-    connection.on("RoomCreated", function (id, roomName, user)
-    {
-        document.getElementById("roomsSelect").innerHTML +=
+        document.getElementById("roomsSelect").innerHTML+=
             `<option value="${id}">${roomName}</option>`;
 
-        document.getElementById("roomsCount").innerText =
+        document.getElementById("roomsCount").innerText=
             document.getElementById("roomsSelect").options.length;
 
-        document.getElementById("activityLog").innerHTML =
+        document.getElementById("activityLog").innerHTML=
             `<li class="list-group-item">${user} created room ${roomName}</li>`
-            + document.getElementById("activityLog").innerHTML;
+            +document.getElementById("activityLog").innerHTML;
 
-        document.getElementById("roomName").value = "";
+        document.getElementById("roomName").value="";
     });
 
-    connection.on("UserJoinedRoom", function (user, roomName)
+    connection.on("UserJoinedRoom",function(user,roomName)
     {
-        document.getElementById("activityLog").innerHTML =
+        document.getElementById("activityLog").innerHTML=
             `<li class="list-group-item">${user} joined room ${roomName}</li>`
-            + document.getElementById("activityLog").innerHTML;
-
-        if (user === "@User.Identity.Name")
-        {
-            let exists = [...document.getElementById("chatRoomSelect").options]
-                .some(x => x.value === roomName);
-
-            if (!exists)
-            {
-                document.getElementById("chatRoomSelect").innerHTML +=
-                    `<option value="${roomName}">${roomName}</option>`;
-            }
-        }
-    });
-
-    connection.on("ReceiveRoomMessage", function (user, message)
-    {
-        document.getElementById("messages").innerHTML =
-            `<li class="list-group-item"><b>${user}</b> : ${message}</li>`
-            + document.getElementById("messages").innerHTML;
-
-        document.getElementById("message").value = "";
-    });
-
-    connection.on("ReceivePrivateMessage", function (sender, message)
-    {
-        document.getElementById("privateMessages").innerHTML =
-            `<li class="list-group-item"><b>${sender}</b> : ${message}</li>`
-            + document.getElementById("privateMessages").innerHTML;
-
-        document.getElementById("activityLog").innerHTML =
-            `<li class="list-group-item">${sender} sent a private message</li>`
-            + document.getElementById("activityLog").innerHTML;
+            +document.getElementById("activityLog").innerHTML;
     });
 
 </script>

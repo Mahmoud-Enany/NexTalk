@@ -20,9 +20,29 @@ namespace SignalRTask.Controllers
         }
         public IActionResult Index()
         {
-            HomeVM vm = new HomeVM();
-            vm.Rooms = context.Rooms.ToList();
-            vm.Users = userManager.Users.ToList();
+            string userId = userManager.GetUserId(User);
+
+            HomeVM vm = new()
+            {
+                Rooms = context.Rooms.ToList(),
+
+                Users = userManager.Users.ToList(),
+
+                FriendsCount = context.Friends
+                    .Count(x => x.UserId == userId),
+
+                RoomsCount = context.Rooms.Count(),
+
+                MessagesCount =
+                    context.PrivateMessages.Count() +
+                    context.GroupMessages.Count(),
+
+                OnlineUsersCount = context.UserConnections
+                    .Select(x => x.UserId)
+                    .Distinct()
+                    .Count()
+            };
+
             return View(vm);
         }
 
