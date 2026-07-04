@@ -22,10 +22,16 @@ namespace SignalRTask.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-            var groups = await context.RoomMembers
-                .Include(x => x.Room)
+            var roomIds = await context.RoomMembers
                 .Where(x => x.UserId == userId)
-                .Select(x => x.Room)
+                .Select(x => x.RoomId)
+                .ToListAsync();
+
+            var groups = await context.Rooms
+                .Where(r => roomIds.Contains(r.Id))
+                .Include(r => r.Members)
+                .Include(r => r.Messages)
+                    .ThenInclude(m => m.Sender)
                 .ToListAsync();
 
             return View(groups);
