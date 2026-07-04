@@ -439,6 +439,15 @@ namespace SignalRTask.Hubs
                     message.Content);
         }
 
+        public async Task GroupTyping(string roomName)
+        {
+            string senderName = (Context.User?.Identity?.Name ?? "Unknown")
+                .Split('@')[0];
+
+            await Clients.OthersInGroup(roomName)
+                .SendAsync("UserTypingInGroup", senderName);
+        }
+
 
 
     }
