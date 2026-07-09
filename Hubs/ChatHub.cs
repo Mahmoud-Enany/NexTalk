@@ -201,22 +201,28 @@ namespace SignalRTask.Hubs
                         notification.Url);
             }
 
-            await Clients.User(receiverId)
-                .SendAsync(
-                    "ReceivePrivateChatMessage",
-                    privateMessage.Id,
-                    senderId,
-                    senderName,
-                    message,
-                    privateMessage.SentAt);
+            bool receiverOnline = await context.UserConnections
+                .AnyAsync(x => x.UserId == receiverId);
 
-            privateMessage.IsDelivered = true;
+            if (receiverOnline)
+            {
+                await Clients.User(receiverId)
+                    .SendAsync(
+                        "ReceivePrivateChatMessage",
+                        privateMessage.Id,
+                        senderId,
+                        senderName,
+                        message,
+                        privateMessage.SentAt);
 
-            await context.SaveChangesAsync();
+                privateMessage.IsDelivered = true;
 
-            await Clients.Caller.SendAsync(
-                "MessageDelivered",
-                privateMessage.Id);
+                await context.SaveChangesAsync();
+
+                await Clients.Caller.SendAsync(
+                    "MessageDelivered",
+                    privateMessage.Id);
+            }
 
             await Clients.Caller.SendAsync(
                 "ReceivePrivateChatMessage",
@@ -288,10 +294,28 @@ namespace SignalRTask.Hubs
                 await context.SaveChangesAsync();
 
                 await Clients.All.SendAsync("UserOnline", Context.UserIdentifier);
+
+                var undeliveredMessages = await context.PrivateMessages
+    .Where(m =>
+        m.ReceiverId == Context.UserIdentifier &&
+        !m.IsDelivered)
+    .ToListAsync();
+
+                foreach (var msg in undeliveredMessages)
+                {
+                    msg.IsDelivered = true;
+
+                    await Clients.User(msg.SenderId)
+                        .SendAsync("MessageDelivered", msg.Id);
+                }
+
+                await context.SaveChangesAsync();
+
                 int onlineCount = await context.UserConnections
     .Select(x => x.UserId)
     .Distinct()
     .CountAsync();
+
 
                 await Clients.All.SendAsync("OnlineUsersChanged", onlineCount);
                 await Clients.All.SendAsync("GroupOnlineUsersChanged");

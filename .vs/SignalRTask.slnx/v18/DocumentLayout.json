@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPgAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-09T14:04:01.676Z",
+              "Title": "ChatController.cs",
+              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\ChatController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ChatController.cs",
+              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\ChatController.cs*",
+              "RelativeToolTip": "Controllers\\ChatController.cs*",
+              "ViewState": "AgIAABUAAAAAAAAAAADwvysAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-09T15:05:45.62Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Hubs\\ChatHub.cs",
+              "RelativeDocumentMoniker": "Hubs\\ChatHub.cs",
+              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Hubs\\ChatHub.cs",
+              "RelativeToolTip": "Hubs\\ChatHub.cs",
+              "ViewState": "AgIAAB4BAAAAAAAAAAAgwDcBAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-09T14:39:00.202Z",
               "EditorCaption": ""
             }
           ]

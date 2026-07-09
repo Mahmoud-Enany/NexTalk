@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SignalRTask.Data;
 using SignalRTask.Models;
+using SignalRTask.Models.chat;
 using SignalRTask.ViewModels.Chat;
 using System.Security.Claims;
 
@@ -27,6 +28,20 @@ namespace SignalRTask.Controllers
         {
             string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             ViewBag.CurrentUserId = currentUserId;
+            var notifications = await context.Notifications
+    .Where(n =>
+        n.UserId == currentUserId &&
+        !n.IsRead &&
+        n.Type == NotificationType.PrivateMessage &&
+        n.Url == $"/Chat/Private/{id}")
+    .ToListAsync();
+
+            foreach (var notification in notifications)
+            {
+                notification.IsRead = true;
+            }
+
+            await context.SaveChangesAsync();
 
             var friend = await userManager.FindByIdAsync(id);
 

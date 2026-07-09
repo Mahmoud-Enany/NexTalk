@@ -184,33 +184,44 @@
         {
             let box = document.getElementById("msg-" + messageId);
 
-            box.insertAdjacentHTML("afterbegin", `
-                <div class="dropdown position-absolute top-0 end-0">
+                    box.insertAdjacentHTML("afterbegin", `
+            <div class="dropdown position-absolute top-0 end-0">
 
-                    <button class="btn btn-sm text-white border-0"
-                            data-bs-toggle="dropdown">
+                <button class="btn btn-sm text-white border-0"
+                        data-bs-toggle="dropdown">
 
-                        ⋮
+                    ⋮
 
-                    </button>
+                </button>
 
-                    <ul class="dropdown-menu">
+                <ul class="dropdown-menu">
 
-                        <li>
+                    <li>
 
-                            <button class="dropdown-item text-danger"
-                                    onclick="deleteMessage(${messageId})">
+                        <button class="dropdown-item"
+                                onclick="editMessage(${messageId})">
 
-                                Delete
+                            Edit
 
-                            </button>
+                        </button>
 
-                        </li>
+                    </li>
 
-                    </ul>
+                    <li>
 
-                </div>
-            `);
+                        <button class="dropdown-item text-danger"
+                                onclick="deleteMessage(${messageId})">
+
+                            Delete
+
+                        </button>
+
+                    </li>
+
+                </ul>
+
+            </div>
+        `);
         }
             chatBody.scrollTop=chatBody.scrollHeight;
 

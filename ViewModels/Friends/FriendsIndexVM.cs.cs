@@ -12,5 +12,6 @@ namespace SignalRTask.ViewModels.Friends
         public List<FriendRequest> FriendRequests { get; set; } = new();
 
         public List<Friend> Friends { get; set; } = new();
+        public List<IdentityUser> AvailableUsers { get; set; } = [];
     }
 }

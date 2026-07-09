@@ -45,16 +45,12 @@ namespace SignalRTask.Controllers
                     : f.SenderId)
                 .ToListAsync();
 
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                vm.SearchResult = await userManager.Users
-                    .Where(u => u.Id != currentUserId)
-                    .Where(u => !friendsIds.Contains(u.Id))
-                    .Where(u => !pendingRequests.Contains(u.Id))
-                    .Where(u => u.Email!.Contains(search))
-                    .OrderBy(u => u.Email)
-                    .ToListAsync();
-            }
+            vm.AvailableUsers = await userManager.Users
+    .Where(u => u.Id != currentUserId)
+    .Where(u => !friendsIds.Contains(u.Id))
+    .Where(u => !pendingRequests.Contains(u.Id))
+    .OrderBy(u => u.Email)
+    .ToListAsync();
 
             vm.FriendRequests = await context.FriendRequests
                 .Include(f => f.Sender)
