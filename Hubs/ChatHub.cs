@@ -288,6 +288,12 @@ namespace SignalRTask.Hubs
                 await context.SaveChangesAsync();
 
                 await Clients.All.SendAsync("UserOnline", Context.UserIdentifier);
+                int onlineCount = await context.UserConnections
+    .Select(x => x.UserId)
+    .Distinct()
+    .CountAsync();
+
+                await Clients.All.SendAsync("OnlineUsersChanged", onlineCount);
                 await Clients.All.SendAsync("GroupOnlineUsersChanged");
             }
 
@@ -311,12 +317,20 @@ namespace SignalRTask.Hubs
                 if (!stillOnline)
                 {
                     await Clients.All.SendAsync("UserOffline", connection.UserId);
+                    int onlineCount = await context.UserConnections
+    .Select(x => x.UserId)
+    .Distinct()
+    .CountAsync();
+
+                    await Clients.All.SendAsync("OnlineUsersChanged", onlineCount);
+
                     await Clients.All.SendAsync("GroupOnlineUsersChanged");
                 }
             }
 
             await base.OnDisconnectedAsync(exception);
         }
+
         public async Task<bool> IsUserOnline(string userId)
         {
             return await context.UserConnections

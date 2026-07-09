@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\groups\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\groups\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|d:\\documents\\iti\\32_signalr\\day2\\lab\\lab\\signalrtask\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C22A2F70-C393-E43C-289D-9D7D8DCDF49D}|SignalRTask.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,32 +14,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GroupsController.cs",
-              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\GroupsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\GroupsController.cs",
-              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Controllers\\GroupsController.cs",
-              "RelativeToolTip": "Controllers\\GroupsController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwCAAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-04T15:39:30.483Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Groups\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Groups\\Index.cshtml",
-              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Groups\\Index.cshtml",
-              "RelativeToolTip": "Views\\Groups\\Index.cshtml",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAcwH0AAAAhAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Documents\\ITI\\32_SignalR\\Day2\\Lab\\Lab\\SignalRTask\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPgAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-04T15:38:06.262Z",
+              "WhenOpened": "2026-07-09T14:04:01.676Z",
               "EditorCaption": ""
             }
           ]
@@ -54,7 +37,11 @@
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         }
